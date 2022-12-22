@@ -27,7 +27,7 @@ data "aws_ami" "amazon_linux" {
 }
 
 resource "aws_instance" "app1" {
-  for_each = data.terraform_remote_state.vpc.VPC_Public_Subnets
+  for_each = data.terraform_remote_state.vpc.outputs.VPC_Public_Subnets
 
   subnet_id = each.value
 
@@ -35,7 +35,7 @@ resource "aws_instance" "app1" {
   ami           = data.aws_ami.amazon_linux.id
   instance_type = "t2.micro"
 
-  vpc_security_group_ids = [data.terraform_remote_state.vpc.VPC_security_group_id]
+  vpc_security_group_ids = [data.terraform_remote_state.vpc.outputs.VPC_security_group_id]
 
   root_block_device {
     delete_on_termination = true
