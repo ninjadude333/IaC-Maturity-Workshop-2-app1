@@ -50,7 +50,6 @@ resource "aws_security_group_rule" "ssh" {
 }
 
 resource "aws_instance" "app1" {
-  # for_each = data.terraform_remote_state.vpc.outputs.VPC_Public_Subnets
   for_each = { for psub in data.terraform_remote_state.vpc.outputs.VPC_Public_Subnets : psub => psub }
 
   subnet_id = each.value
@@ -78,8 +77,8 @@ user_data = <<-EOF
 yum update -y
 yum install -y jq
 yum install -y httpd
-systemctl start httpd
-systemctl enable httpd
+service httpd start
+service httpd enable
 echo "<h1>Hello World from App1 in subnet: $(hostname -f)</h1>" > /var/www/html/index.html
 EOF
 }
