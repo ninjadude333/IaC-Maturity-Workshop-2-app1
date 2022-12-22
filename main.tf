@@ -36,7 +36,6 @@ resource "aws_instance" "app1" {
   ami           = data.aws_ami.amazon_linux.id
   instance_type = "t2.micro"
 
-  private_ip = "auto"
   associate_public_ip_address = true
 
   vpc_security_group_ids = [data.terraform_remote_state.vpc.outputs.VPC_security_group_id]
