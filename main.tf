@@ -26,6 +26,29 @@ data "aws_ami" "amazon_linux" {
   }
 }
 
+resource "aws_security_group" "app1-sg" {
+  name   = "sg for app 1"
+  vpc_id = data.terraform_remote_state.vpc.outputs.VPC_ID
+}
+
+resource "aws_security_group_rule" "http" {
+  type        = "ingress"
+  from_port   = 80
+  to_port     = 80
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.app1-sg.id
+}
+
+resource "aws_security_group_rule" "ssh" {
+  type        = "ingress"
+  from_port   = 22
+  to_port     = 22
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.app1-sg.id
+}
+
 resource "aws_instance" "app1" {
   # for_each = data.terraform_remote_state.vpc.outputs.VPC_Public_Subnets
   for_each = { for psub in data.terraform_remote_state.vpc.outputs.VPC_Public_Subnets : psub => psub }
@@ -37,9 +60,8 @@ resource "aws_instance" "app1" {
   instance_type = "t2.micro"
 
   associate_public_ip_address = true
-
-  vpc_security_group_ids = [data.terraform_remote_state.vpc.outputs.VPC_security_group_id]
-
+  security_groups = [data.terraform_remote_state.vpc.outputs.VPC_security_group_id,aws_security_group.app1-sg.id]
+  
   root_block_device {
     delete_on_termination = true
     volume_size = 8
