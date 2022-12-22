@@ -43,7 +43,7 @@ resource "aws_instance" "app1" {
 
   root_block_device {
     delete_on_termination = true
-    volume_size = 10
+    volume_size = 5
     volume_type = "gp2"
   }
   tags = {
