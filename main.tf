@@ -27,7 +27,8 @@ data "aws_ami" "amazon_linux" {
 }
 
 resource "aws_instance" "app1" {
-  for_each = data.terraform_remote_state.vpc.outputs.VPC_Public_Subnets
+  # for_each = data.terraform_remote_state.vpc.outputs.VPC_Public_Subnets
+  for_each = { for psub in data.terraform_remote_state.vpc.outputs.VPC_Public_Subnets : psub => psub }
 
   subnet_id = each.value
 
