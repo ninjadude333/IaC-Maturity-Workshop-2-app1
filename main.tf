@@ -61,7 +61,7 @@ resource "aws_instance" "app1" {
   associate_public_ip_address = true
   security_groups = [data.terraform_remote_state.vpc.outputs.VPC_security_group_id,aws_security_group.app1-sg.id]
   
-  enable_monitoring = true
+  monitoring = true
   
   root_block_device {
     delete_on_termination = true
