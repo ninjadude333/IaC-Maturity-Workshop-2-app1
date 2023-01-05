@@ -1,7 +1,9 @@
-output "instance_public_ip" {
-  value = values(aws_instance.app1).*.public_ip
+output "APP-LoadBalancer-dns" {
+  description = "Alb dns name"
+  value       = module.terraform-AWS-Maturity_Workshop_App_module.outputs.APP-LoadBalancer-dns
 }
 
-output "instance_public_dns" {
-  value = values(aws_instance.app1).*.public_dns
+output "private_key" {
+  value     = module.terraform-AWS-Maturity_Workshop_App_module.outputs.private_key
+  sensitive = true
 }
