@@ -7,7 +7,7 @@ resource "aws_lb_target_group" "app_lbtg" {
 }
 
 resource "aws_lb" "app_lb" {
-  name               = "app-lb"
+  name               = "${var.app_name}-app-lb"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.app_lb_sg.id]
