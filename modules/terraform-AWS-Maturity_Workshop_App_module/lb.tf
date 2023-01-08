@@ -47,4 +47,18 @@ resource "aws_autoscaling_group" "app_asg" {
   desired_capacity     = 2
   launch_configuration = aws_launch_configuration.app_launch_config.name
   vpc_zone_identifier  = var.vpc_public_subnet_ids
+
+  tag {
+    key                 = "Name"
+    value               = var.app_name
+    propagate_at_launch = true
+  }
+  
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 50
+    }
+    triggers = ["tag"]
+  }
 }
