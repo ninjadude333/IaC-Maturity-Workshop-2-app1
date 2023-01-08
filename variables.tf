@@ -15,7 +15,7 @@ variable "TF_HCP_org_name" {
 variable "TF_HCP_workspace_name" {
   description = "The Name of the HCP TF workspace to query state from."
   type        = string
-  default     = "IaC-Maturity-Workshop-1-vpc"
+  default     = "IaC-Maturity-Workshop-Phase3-vpc"
 }
 
 variable "aws_region" {
