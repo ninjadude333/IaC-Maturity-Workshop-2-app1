@@ -1,5 +1,5 @@
 resource "aws_lb_target_group" "app_lbtg" {
-  name     = "${var.app_name}-lbtg-${var.aws_region}"
+  name     = "${var.Phase}-${var.app_name}-lbtg-${var.aws_region}"
   port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc_id
@@ -7,7 +7,7 @@ resource "aws_lb_target_group" "app_lbtg" {
 }
 
 resource "aws_lb" "app_lb" {
-  name               = "${var.app_name}-app-lb"
+  name               = "${var.Phase}-${var.app_name}-app-lb"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.app_lb_sg.id]
@@ -41,7 +41,7 @@ resource "aws_autoscaling_attachment" "app_asa" {
 }
 
 resource "aws_autoscaling_group" "app_asg" {
-  name                 = "${var.app_name}_asg"
+  name                 = "${var.Phase}-${var.app_name}_asg"
   min_size             = 2
   max_size             = 4
   desired_capacity     = 2
@@ -50,10 +50,10 @@ resource "aws_autoscaling_group" "app_asg" {
 
   tag {
     key                 = "Name"
-    value               = var.app_name
+    value               = "${var.Phase}-${var.app_name}"
     propagate_at_launch = true
   }
-  
+
   instance_refresh {
     strategy = "Rolling"
     preferences {

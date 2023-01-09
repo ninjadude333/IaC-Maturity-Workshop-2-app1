@@ -1,5 +1,5 @@
 resource "aws_security_group" "app-sg" {
-  name        = "${var.app_name}-sg"
+  name        = "${var.Phase}-${var.app_name}-sg"
   description = "Allow SSH and HTTP traffic"
   vpc_id      = var.vpc_id
 
@@ -30,7 +30,7 @@ resource "aws_security_group" "app-sg" {
 }
 
 resource "aws_security_group" "app_lb_sg" {
-  name = "${var.app_name}_lb_sg"
+  name = "${var.Phase}-${var.app_name}_lb_sg"
   ingress {
     from_port   = 80
     to_port     = 80

@@ -1,11 +1,3 @@
-variable "aws_access_key" {
-  type = string
-}
-
-variable "aws_secret_key" {
-  type = string
-}
-
 variable "TF_HCP_org_name" {
   description = "The Name of the HCP TF Organization."
   type        = string
@@ -31,5 +23,11 @@ variable "key_pair_Name" {
 
 variable "App_Name" {
   type    = string
-  default = "mature-app1"
+  default = "app1"
+}
+
+variable "Phase" {
+  description = "demo phase"
+  type        = string
+  default     = "three"
 }

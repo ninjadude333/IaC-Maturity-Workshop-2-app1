@@ -1,11 +1,3 @@
-variable "aws_access_key" {
-  type = string
-}
-
-variable "aws_secret_key" {
-  type = string
-}
-
 variable "vpc_name" {
   description = "The Name of the VPC."
   type        = string
@@ -47,10 +39,16 @@ variable "vpc_public_subnet_ids" {
 variable "keypair_name" {
   description = "keypair_name"
   type        = string
-  default     = "matureSSH"
+  default     = "matureSSH3"
 }
 
 variable "app_name" {
   type    = string
   default = "myApp"
+}
+
+variable "Phase" {
+  description = "demo phase"
+  type        = string
+  default     = "three"
 }

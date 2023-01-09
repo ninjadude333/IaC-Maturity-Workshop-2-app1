@@ -19,7 +19,7 @@ data "aws_ami" "amazonLnx" {
 }
 
 resource "aws_launch_configuration" "app_launch_config" {
-  name_prefix          = "${var.app_name}-"
+  name_prefix          = "${var.Phase}-${var.app_name}-"
   image_id             = data.aws_ami.amazonLnx.id
   instance_type        = "t2.micro"
   key_name             = aws_key_pair.generated_key.key_name

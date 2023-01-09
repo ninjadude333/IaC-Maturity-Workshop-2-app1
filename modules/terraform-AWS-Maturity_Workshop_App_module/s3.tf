@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "app-logs" {
-  bucket        = "maturity-${var.app_name}-logs"
+  bucket        = "maturity-${var.Phase}-${var.app_name}-logs"
   force_destroy = true
   tags          = local.tags
 }
@@ -32,7 +32,7 @@ EOF
 }
 
 resource "aws_iam_role" "app_s3_access" {
-  name               = "${var.app_name}_s3_access"
+  name               = "${var.Phase}-${var.app_name}_s3_access"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -54,7 +54,7 @@ EOF
 }
 
 resource "aws_iam_policy" "app-s3_access" {
-  name   = "s3_access-${var.app_name}"
+  name   = "${var.Phase}-s3_access-${var.app_name}"
   policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -80,7 +80,7 @@ resource "aws_iam_role_policy_attachment" "app-s3_access" {
 }
 
 resource "aws_iam_instance_profile" "app_s3_access" {
-  name = "${var.app_name}_s3_access"
+  name = "${var.Phase}-${var.app_name}_s3_access"
   role = aws_iam_role.app_s3_access.name
   tags = local.tags
 }
