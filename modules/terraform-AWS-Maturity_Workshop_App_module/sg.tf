@@ -1,5 +1,5 @@
 resource "aws_security_group" "app-sg" {
-  name        = "${var.Phase}-${var.App_Name}-sg"
+  name        = "${var.Phase}-${var.app_name}-sg"
   description = "Allow SSH and HTTP traffic"
   vpc_id      = var.vpc_id
   tags        = local.tags

@@ -1,3 +1,12 @@
+resource "aws_autoscaling_group" "app_asg" {
+  name                 = "${var.Phase}-${var.app_name}_asg"
+  min_size             = 2
+  max_size             = 4
+  desired_capacity     = 2
+  launch_configuration = aws_launch_configuration.app_launch_config.name
+  vpc_zone_identifier  = data.terraform_remote_state.vpc
+}
+
 resource "aws_launch_configuration" "app_launch_config" {
   name_prefix          = "${var.Phase}-${var.app_name}-"
   image_id             = data.aws_ami.amazonLnx.id
