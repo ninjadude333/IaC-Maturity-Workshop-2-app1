@@ -4,7 +4,7 @@ resource "aws_autoscaling_group" "app_asg" {
   max_size             = 4
   desired_capacity     = 2
   launch_configuration = aws_launch_configuration.app_launch_config.name
-  vpc_zone_identifier  = data.terraform_remote_state.vpc
+  vpc_zone_identifier  = var.vpc_public_subnet_ids
 }
 
 resource "aws_launch_configuration" "app_launch_config" {
