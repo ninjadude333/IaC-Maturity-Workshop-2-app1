@@ -1,50 +1,39 @@
 resource "aws_security_group" "app-sg" {
-  name        = "${var.Phase}-${var.app_name}-sg"
+  name        = "${var.Phase}-${var.App_Name}-sg"
   description = "Allow SSH and HTTP traffic"
   vpc_id      = var.vpc_id
-
-  ingress {
-    description = "SSH"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description     = "HTTP"
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
-    security_groups = [aws_security_group.app_lb_sg.id]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = local.tags
+  tags        = local.tags
 }
 
-resource "aws_security_group" "app_lb_sg" {
-  name = "${var.Phase}-${var.app_name}_lb_sg"
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+resource "aws_security_group_rule" "SSH" {
+  type        = "ingress"
+  from_port   = 22
+  to_port     = 22
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  description = "SSH"
 
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  security_group_id = aws_security_group.app-sg.id
+}
 
-  vpc_id = var.vpc_id
-  tags   = local.tags
+resource "aws_security_group_rule" "HTTP" {
+  type        = "ingress"
+  from_port   = 80
+  to_port     = 80
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  description = "HTTP"
+
+  security_group_id = aws_security_group.app-sg.id
+}
+
+
+resource "aws_security_group_rule" "egress" {
+  type        = "egress"
+  from_port   = 0
+  to_port     = 0
+  protocol    = -1
+  cidr_blocks = ["0.0.0.0/0"]
+
+  security_group_id = aws_security_group.app-sg.id
 }

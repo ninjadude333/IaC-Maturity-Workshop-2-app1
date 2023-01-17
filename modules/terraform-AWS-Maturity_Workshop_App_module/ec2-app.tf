@@ -1,23 +1,3 @@
-data "aws_ami" "amazonLnx" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-hvm-*-gp2"]
-  }
-
-  filter {
-    name   = "root-device-type"
-    values = ["ebs"]
-  }
-
-  filter {
-    name   = "architecture"
-    values = ["x86_64"]
-  }
-}
-
 resource "aws_launch_configuration" "app_launch_config" {
   name_prefix          = "${var.Phase}-${var.app_name}-"
   image_id             = data.aws_ami.amazonLnx.id

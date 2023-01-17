@@ -1,6 +1,5 @@
-output "APP-LoadBalancer-dns" {
-  description = "Alb dns name"
-  value       = aws_lb.app_lb.dns_name
+output "app-dns" {
+  value = "http://${aws_route53_record.app.name}"
 }
 
 output "private_key" {
