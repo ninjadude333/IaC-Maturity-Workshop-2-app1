@@ -1,6 +1,6 @@
-output "APP-LoadBalancer-dns" {
+output "APP--dns" {
   description = "Alb dns name"
-  value       = module.terraform-AWS-Maturity_Workshop_App_module.APP-LoadBalancer-dns
+  value       = module.terraform-AWS-Maturity_Workshop_App_module.app-dns
 }
 
 output "private_key" {
