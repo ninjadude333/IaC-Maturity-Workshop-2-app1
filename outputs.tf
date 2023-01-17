@@ -1,5 +1,5 @@
 output "APP--dns" {
-  description = "Alb dns name"
+  description = "dns name"
   value       = module.terraform-AWS-Maturity_Workshop_App_module.app-dns
 }
 

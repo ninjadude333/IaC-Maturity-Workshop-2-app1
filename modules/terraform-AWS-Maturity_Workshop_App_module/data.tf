@@ -24,6 +24,9 @@ data "aws_instances" "app" {
     values = [aws_iam_instance_profile.app_s3_access.arn]
   }
   instance_state_names = ["running", "pending"]
+  depends_on = [
+    aws_autoscaling_group.app_asg
+  ]
 }
 
 data "aws_route53_zone" "dudelabxxx" {
