@@ -21,7 +21,6 @@ resource "aws_autoscaling_group" "app_asg" {
 	]
   }
 }
-}
 
 resource "aws_launch_configuration" "app_launch_config" {
   name_prefix          = "${var.Phase}-${var.app_name}-"
