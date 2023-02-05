@@ -2,6 +2,11 @@ resource "aws_s3_bucket" "app-logs" {
   bucket        = "maturity-${var.Phase}-${var.app_name}-logs"
   force_destroy = true
   tags          = local.tags
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }
 
 resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
@@ -33,6 +38,12 @@ EOF
 
 resource "aws_iam_role" "app_s3_access" {
   name               = "${var.Phase}-${var.app_name}_s3_access"
+  tags          = local.tags
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -55,6 +66,12 @@ EOF
 
 resource "aws_iam_policy" "app-s3_access" {
   name   = "${var.Phase}-s3_access-${var.app_name}"
+  tags          = local.tags
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
   policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -82,5 +99,10 @@ resource "aws_iam_role_policy_attachment" "app-s3_access" {
 resource "aws_iam_instance_profile" "app_s3_access" {
   name = "${var.Phase}-${var.app_name}_s3_access"
   role = aws_iam_role.app_s3_access.name
-  tags = local.tags
+  tags          = local.tags
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }

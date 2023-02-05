@@ -5,6 +5,22 @@ resource "aws_autoscaling_group" "app_asg" {
   desired_capacity     = 2
   launch_configuration = aws_launch_configuration.app_launch_config.name
   vpc_zone_identifier  = var.vpc_public_subnet_ids
+  tag {
+	key                 = "Name"
+	propagate_at_launch = true
+	value               = "${var.Phase}-${var.app_name}_asg"
+  }
+  tag {
+	key                 = "terraform"
+	propagate_at_launch = true
+	value               = "true"
+  }
+  lifecycle {
+	ignore_changes = [
+	  tags
+	]
+  }
+}
 }
 
 resource "aws_launch_configuration" "app_launch_config" {
@@ -56,6 +72,6 @@ yum install -y jq
 yum install -y httpd
 service httpd start
 service httpd enable
-echo "<h1>Hello World from App: ${var.app_name} in subnet: $(hostname -f)</h1>" > /var/www/html/index.html
+echo "<h1>Hello World from ${var.Phase} - App: ${var.app_name} in subnet: $(hostname -f)</h1>" > /var/www/html/index.html
 EOF
 }
