@@ -17,7 +17,7 @@ resource "aws_autoscaling_group" "app_asg" {
   }
   lifecycle {
 	ignore_changes = [
-	  tags
+	  tag
 	]
   }
 }
