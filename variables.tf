@@ -13,7 +13,7 @@ variable "TF_HCP_workspace_name" {
 variable "aws_region" {
   description = "AWS Region to deploy stuff in"
   type        = string
-  default     = "eu-west-2"
+  default     = "eu-west-1"
 }
 
 variable "key_pair_Name" {
