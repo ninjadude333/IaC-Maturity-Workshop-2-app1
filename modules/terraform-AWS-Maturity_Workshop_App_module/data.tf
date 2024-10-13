@@ -29,7 +29,7 @@ data "aws_instances" "app" {
   ]
 }
 
-data "aws_route53_zone" "dudelabxxx" {
-  name         = "dudelabxxx.com."
+data "aws_route53_zone" "dudelabz" {
+  name         = "dudelabz.com."
   private_zone = false
 }
